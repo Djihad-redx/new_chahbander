@@ -16,6 +16,7 @@ class _CheckOut3State extends State<CheckOut3> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -128,6 +129,7 @@ class _CheckOut3State extends State<CheckOut3> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15.0),
                   child: ListView(
+                    padding: EdgeInsets.only(bottom: 20),
                     children: [
                       Text(
                         'Summary',
@@ -389,7 +391,8 @@ class _CheckOut3State extends State<CheckOut3> {
                     ],
                   ),
                 ),
-              )
+              ),
+
             ],
           ),
         ),

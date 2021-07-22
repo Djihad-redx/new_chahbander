@@ -24,6 +24,7 @@ class _PaymentsState extends State<Payments> {
   Widget build(BuildContext context) {
     var mediaWid = MediaQuery.of(context).size.width;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: true,

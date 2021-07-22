@@ -77,39 +77,35 @@ class _CartPagepState extends State<CartPagep> {
         body:SafeArea(
           child: isloading == true?  Expanded(child: Loading()):
           General.cart.products == null && cartlist.data == null?
-          Expanded(
-            child: Center(
-              child: Container(child:
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.remove_shopping_cart_outlined,size: 55,),
-                  ),
-                  Text('Cart is empty',style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold
-                  ),)
-                ],
-              ),),
-            ),
-          ):
-          Expanded(
-            child: CustomScrollView(
-              slivers: <Widget> [
-                  SliverToBoxAdapter(
-                  child: HeaderApp(c: context,Title: "Cart",icon: Icons.arrow_back,),
+          Center(
+            child: Container(child:
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(Icons.remove_shopping_cart_outlined,size: 55,),
                 ),
-                  SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                   return  Padding(
-                     padding: const EdgeInsets.only(left:20,right: 20,top: 10),
-                     child: Stack(
-                       children: [
-                         Container(
+                Text('Cart is empty',style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold
+                ),)
+              ],
+            ),),
+          ):
+          Column(
+            children: [
+              HeaderApp(c: context,Title: "Cart",icon: Icons.arrow_back,),
+              Expanded(
+                child: CustomScrollView(
+                  slivers: <Widget> [
+                      SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                       return  Padding(
+                         padding: const EdgeInsets.only(left:20,right: 20,top: 10),
+                         child:  Container(
                            padding: EdgeInsets.all(10),
                            decoration: BoxDecoration(
                              borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -139,97 +135,167 @@ class _CartPagepState extends State<CartPagep> {
                                  crossAxisAlignment: CrossAxisAlignment.start,
                                  mainAxisAlignment: MainAxisAlignment.start,
                                  children: [
-                                   Container(
-                                     width: 130,
-                                     child: Padding(
-                                       padding:  EdgeInsets.only(left:15.0,top: 15),
-                                       child: Text(
-                                         General.token != ""? cartlist.data.cartItems.items[index].name:General.cart.products[index].name,
-                                         style: TextStyle(color: Colors.black, fontSize: 18,fontWeight: FontWeight.bold),
-                                         maxLines: 2,
+                                   Padding(
+                                     padding:  EdgeInsets.only(left:15.0,top: 15),
+                                     child: Container(
+                                       //width: MediaQuery.of(context).size.width*.6,
+                                       child: Row(
+                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                         children: [
+                                           Container(
+                                             width: MediaQuery.of(context).size.width*.30,
+                                             child: Text(
+                                               General.token != ""? cartlist.data.cartItems.items[index].name:General.cart.products[index].name,
+                                               style: TextStyle(color: Colors.black, fontSize: 18,fontWeight: FontWeight.bold),
+                                               maxLines:2,
+                                             ),
+                                           ),
+                                           Container(
+                                             //width: 100,
+                                             child: Text(' \$ ${General.token != ""?cartlist.data.cartItems.items[index].price*cartlist.data.cartItems.items[index].quantity:General.cart.products[index].price[0].priceNow*General.cart.products[index].quantity}',style: TextStyle(
+                                                 fontSize: 22,
+                                                 color: Colors.orangeAccent
+                                             ),),
+                                           )
+                                         ],
                                        ),
                                      ),
                                    ),
                                    SizedBox(height: 15),
+                                   Container(
+                                     width: MediaQuery.of(context).size.width*.55,
+                                     child: Row(
+                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                       children: [
+                                         Padding(
+                                           padding: const EdgeInsets.only(left:15),
+                                           child: Container(
+                                             height: 60,
+                                             width: 130,
+                                             margin: EdgeInsets.only(top: 4),
+                                             padding: EdgeInsets.only(left:3,right: 3,top: 1,bottom: 1),
+                                             decoration: BoxDecoration(
+                                               borderRadius: BorderRadius.all(Radius.circular(5)),
 
-                                   Padding(
-                                     padding: const EdgeInsets.only(left:15),
-                                     child: Container(
-                                       height: 60,
-                                       width: 120,
-                                       margin: EdgeInsets.only(top: 4),
-                                       padding: EdgeInsets.only(left:3,right: 3,top: 1,bottom: 1),
-                                       decoration: BoxDecoration(
-                                         borderRadius: BorderRadius.all(Radius.circular(5)),
-
-                                       ),
-                                       child:Row(
-                                         children: [
-                                           Expanded(
-                                             child: InkWell(
-                                               onTap: (){
-                                                 setState(() {
-                                                   if( General.cart.products[index].quantity <10){
-                                                     setState(() {
-                                                       General().editaddQuantity(General.cart.products[index].id).then((value){
-                                                         setState(() {
-                                                           total = total + General.cart.products[index].price[0].priceNow;
-                                                         });
+                                             ),
+                                             child:Row(
+                                               children: [
+                                                 Expanded(
+                                                   child: InkWell(
+                                                     onTap: (){
+                                                       setState(() {
+                                                         if( General.cart.products[index].quantity <10){
+                                                           setState(() {
+                                                             General().editaddQuantity(General.cart.products[index].id).then((value){
+                                                               setState(() {
+                                                                 total = total + General.cart.products[index].price[0].priceNow;
+                                                               });
+                                                             });
+                                                           });
+                                                         }
                                                        });
-                                                     });
-                                                   }
-                                                 });
-                                               },
-                                               child: Container(
-                                                 height: 40,
-                                                 decoration: BoxDecoration(
+                                                     },
+                                                     child: Container(
+                                                       height: 40,
+                                                       decoration: BoxDecoration(
+                                                           color: Colors.grey.shade200,
+                                                           borderRadius: BorderRadius.only(topLeft:Radius.circular(20),bottomLeft: Radius.circular(20))
+                                                       ),
+                                                       child: Icon(FontAwesomeIcons.plus,size: 18),
+                                                     ),
+                                                   ),
+                                                 ),
+                                                 Expanded(
+                                                   child: Container(
+                                                     height: 40,
                                                      color: Colors.grey.shade200,
-                                                     borderRadius: BorderRadius.only(topLeft:Radius.circular(20),bottomLeft: Radius.circular(20))
+                                                     child: Center(
+                                                       child: Text( General.token != ""? cartlist.data.cartItems.items[index].quantity.toString():General.cart.products[index].quantity.toString(), style: TextStyle(
+                                                           fontSize: 20,
+                                                           fontWeight: FontWeight.bold
+                                                       ),),
+                                                     ),
+                                                   ),
                                                  ),
-                                                 child: Icon(FontAwesomeIcons.plus,size: 18),
-                                               ),
-                                             ),
-                                           ),
-                                           Expanded(
-                                             child: Container(
-                                               height: 40,
-                                               color: Colors.grey.shade200,
-                                               child: Center(
-                                                 child: Text( General.token != ""? cartlist.data.cartItems.items[index].quantity.toString():General.cart.products[index].quantity.toString(), style: TextStyle(
-                                                     fontSize: 20,
-                                                     fontWeight: FontWeight.bold
-                                                 ),),
-                                               ),
-                                             ),
-                                           ),
-                                           Expanded(
-                                             child: InkWell(
-                                               onTap: (){
-                                                 setState(() {
-                                                   if( General.cart.products[index].quantity >1){
-                                                     setState(() {
-                                                       General().editsubQuantity(General.cart.products[index].id).then((value){
-                                                         setState(() {
-                                                           total = total - General.cart.products[index].price[0].priceNow;
-                                                         });
+                                                 Expanded(
+                                                   child: InkWell(
+                                                     onTap: (){
+                                                       setState(() {
+                                                         if( General.cart.products[index].quantity >1){
+                                                           setState(() {
+                                                             General().editsubQuantity(General.cart.products[index].id).then((value){
+                                                               setState(() {
+                                                                 total = total - General.cart.products[index].price[0].priceNow;
+                                                               });
+                                                             });
+                                                           });
+                                                         }
                                                        });
-                                                     });
-                                                   }
-                                                 });
 
-                                               },
-                                               child: Container(
-                                                 height: 40,
-                                                 decoration: BoxDecoration(
-                                                     borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),topRight: Radius.circular(20)),
-                                                     color: Colors.grey.shade200
+                                                     },
+                                                     child: Container(
+                                                       height: 40,
+                                                       decoration: BoxDecoration(
+                                                           borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),topRight: Radius.circular(20)),
+                                                           color: Colors.grey.shade200
+                                                       ),
+                                                       child: Icon(FontAwesomeIcons.minus,size: 17,),
+                                                     ),
+                                                   ),
                                                  ),
-                                                 child: Icon(FontAwesomeIcons.minus,size: 17,),
-                                               ),
+                                               ],
                                              ),
                                            ),
-                                         ],
-                                       ),
+                                         ),
+                                         InkWell(
+                                           onTap: (){
+
+                                             if (General.token!=""){
+                                               setState(() {
+                                                 isloading = true;
+                                               });
+                                               Api.RemoveProductCart(cartlist.data.cartItems.items[index].productId, true).then((value2) {
+                                                 Api.LoadProductCart().then((value) {
+                                                   setState(() {
+                                                     cartlist = value;
+                                                     print (value);
+                                                     if(cartlist!= null){
+                                                       for(int i = 0;i<cartlist.data.cartItems.items.length;i++){
+                                                         total = total + cartlist.data.cartItems.items[i].price*cartlist.data.cartItems.items[i].quantity;
+                                                       };
+                                                     }
+                                                     setState(() {
+                                                       isloading = false;
+                                                     });
+                                                   });
+                                                 });
+                                               });
+                                             }else{
+                                               General().deletproduct(index).then((value) {
+                                                 General().getProductfromCart().then((value) {
+                                                   setState(() {
+                                                     General.cart.products = value;
+                                                     total = total- General.cart.products[index].price[0].priceNow*General.cart.products[index].quantity;
+                                                   });
+                                                 });
+                                               });
+                                             }
+                                             setState(() {
+                                               isloading = false;
+
+                                             });
+                                           },
+                                           child: Container(
+                                             height: 45,
+                                             width: 45,
+                                             decoration: BoxDecoration(
+                                                 color: Color(0xff0E516E),
+                                                 borderRadius: BorderRadius.all(Radius.circular(15))
+                                             ),
+                                             child: Center(child: Icon(FontAwesomeIcons.trashAlt,color: Colors.white,size: 17,)),
+                                           ),
+                                         )
+                                       ],
                                      ),
                                    ),
                                  ],
@@ -237,370 +303,115 @@ class _CartPagepState extends State<CartPagep> {
                              ],
                            ),
                          ),
-                         Positioned(
-                             top: 20,
-                             right: 2,
-                             child: Text(' \$ ${General.token != ""?cartlist.data.cartItems.items[index].price*cartlist.data.cartItems.items[index].quantity:General.cart.products[index].price[0].priceNow*General.cart.products[index].quantity}',style: TextStyle(
-                                 fontSize: 22,
-                                 color: Colors.orangeAccent
-                             ),)),
-                         Positioned(
-                             bottom: 22,
-                             right: 5,
-                             child: InkWell(
-                               onTap: (){
-
-                                 if (General.token!=""){
-                                   setState(() {
-                                     isloading = true;
-                                   });
-                                   Api.RemoveProductCart(cartlist.data.cartItems.items[index].productId, true).then((value2) {
-                                     Api.LoadProductCart().then((value) {
-                                       setState(() {
-                                         cartlist = value;
-                                         print (value);
-                                         if(cartlist!= null){
-                                           for(int i = 0;i<cartlist.data.cartItems.items.length;i++){
-                                             total = total + cartlist.data.cartItems.items[i].price*cartlist.data.cartItems.items[i].quantity;
-                                           };
-                                         }
-                                         setState(() {
-                                           isloading = false;
-                                         });
-                                       });
-                                     });
-                                   });
-                                 }else{
-                                   General().deletproduct(index).then((value) {
-                                     General().getProductfromCart().then((value) {
-                                       setState(() {
-                                         General.cart.products = value;
-                                         total = total- General.cart.products[index].price[0].priceNow*General.cart.products[index].quantity;
-                                       });
-                                     });
-                                   });
-                                 }
-                                   setState(() {
-                                     isloading = false;
-
-                                 });
-                               },
-                               child: Container(
-                                 height: 45,
-                                 width: 45,
-                                 decoration: BoxDecoration(
-                                     color: Color(0xff0E516E),
-                                     borderRadius: BorderRadius.all(Radius.circular(15))
-                                 ),
-                                 child: Center(child: Icon(FontAwesomeIcons.trashAlt,color: Colors.white,size: 17,)),
-                               ),
-                             )),
-                       ],
-                     ),
-                   );
-                },
-                childCount: General.token == ""? General.cart.products.length: cartlist.data.cartItems.items.length,
-          ),
+                       );
+                    },
+                    childCount: General.token == ""? General.cart.products.length: cartlist.data.cartItems.items.length,
+                ),
         ),
-                  SliverToBoxAdapter(
-                  child:   Container(
-                    margin: EdgeInsets.only(top: 10),
-                    padding: EdgeInsets.only(right: 20,left: 20,bottom: 10,top: 10),
-                    decoration: BoxDecoration(
-                      //color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, -15),
-                          blurRadius: 20,
-                          color: Color(0xFFDADADA).withOpacity(0.15),
-                        )
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("Totals",style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 19,
-                          ),textAlign: TextAlign.start,),
+                      SliverToBoxAdapter(
+                      child:   Container(
+                        margin: EdgeInsets.only(top: 10),
+                        padding: EdgeInsets.only(right: 20,left: 20,bottom: 10,top: 10),
+                        decoration: BoxDecoration(
+                          //color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, -15),
+                              blurRadius: 20,
+                              color: Color(0xFFDADADA).withOpacity(0.15),
+                            )
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
 
+                          children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text("Subtotal:",style: TextStyle(
+                              child: Text("Totals",style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                fontSize: 19,
                               ),textAlign: TextAlign.start,),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text("${General.token==""?total:cartlist.data.cartItems.totalCost} \$",style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.orangeAccent
-                              ),),
-                            ),
-                          ],),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
 
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text("Total",style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),textAlign: TextAlign.start,),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(" 0.0  \$",style: TextStyle(
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("Subtotal:",style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.orangeAccent
-                                ),),
-                              ),
-                            ],),
-                        ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              width: 180,
-                              child: DefaultButton(
-                                text: "Check Out",
-                                press: () {
-                                  setState(() {
-                                    //General().setProductincartnull();
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Checkout1(),));
-                                    total = 0.0;
-                                  });
+                                    fontSize: 16,
+                                  ),textAlign: TextAlign.start,),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("${General.token==""?total:cartlist.data.cartItems.totalCost} \$",style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: Colors.orangeAccent
+                                  ),),
+                                ),
+                              ],),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Total",style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),textAlign: TextAlign.start,),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(" 0.0  \$",style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.orangeAccent
+                                    ),),
+                                  ),
+                                ],),
+                            ),
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  width: 180,
+                                  child: DefaultButton(
+                                    text: "Check Out",
+                                    press: () {
+                                      setState(() {
+                                        //General().setProductincartnull();
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Checkout1(),));
+                                        total = 0.0;
+                                      });
 
 
-                                },
+                                    },
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-
-                // Expanded(
-                //   child:  ListView.builder(
-                //     padding: EdgeInsets.only(top: 0),
-                //     itemCount: General.token == ""? General.cart.products.length: cartlist.data.cartItems.items.length,
-                //     itemBuilder: (context, index) {
-                //       return Padding(
-                //         padding: const EdgeInsets.only(left:20,right: 20,top: 10),
-                //         child: Stack(
-                //           children: [
-                //             Container(
-                //               padding: EdgeInsets.all(10),
-                //               decoration: BoxDecoration(
-                //                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                //               ),
-                //               child: Row(
-                //                 children: [
-                //                   SizedBox(
-                //                     width: 130,
-                //                     height: 130,
-                //                     child: AspectRatio(
-                //                       aspectRatio: 0.88,
-                //                       child: Container(
-                //                         padding: EdgeInsets.all(10),
-                //                         decoration: BoxDecoration(
-                //                             border: Border.all(width: 2,color: Colors.grey),
-                //                             borderRadius: BorderRadius.circular(22),
-                //                             image: DecorationImage(
-                //                                 image:General.token !=""? cartlist.data.cartItems.items[index].productPictureUrl.isNotEmpty? NetworkImage(cartlist.data.cartItems.items[index].productPictureUrl):AssetImage('assets/images/np.png'):General.cart.products[index].productPicture.isNotEmpty? NetworkImage(General.cart.products[index].productPicture[0].url):AssetImage('assets/images/np.png'),
-                //                                 fit: BoxFit.cover
-                //                             )
-                //                         ),
-                //                       ),
-                //                     ),
-                //                   ),
-                //                   // SizedBox(width: 20),
-                //                   Column(
-                //                     crossAxisAlignment: CrossAxisAlignment.start,
-                //                     mainAxisAlignment: MainAxisAlignment.start,
-                //                     children: [
-                //                       Container(
-                //                         width: 130,
-                //                         child: Padding(
-                //                           padding:  EdgeInsets.only(left:15.0,top: 15),
-                //                           child: Text(
-                //                             General.token != ""? cartlist.data.cartItems.items[index].name:General.cart.products[index].name,
-                //                             style: TextStyle(color: Colors.black, fontSize: 18,fontWeight: FontWeight.bold),
-                //                             maxLines: 2,
-                //                           ),
-                //                         ),
-                //                       ),
-                //                       SizedBox(height: 15),
-                //
-                //                       Padding(
-                //                         padding: const EdgeInsets.only(left:15),
-                //                         child: Container(
-                //                           height: 60,
-                //                           width: 120,
-                //                           margin: EdgeInsets.only(top: 4),
-                //                           padding: EdgeInsets.only(left:3,right: 3,top: 1,bottom: 1),
-                //                           decoration: BoxDecoration(
-                //                             borderRadius: BorderRadius.all(Radius.circular(5)),
-                //
-                //                           ),
-                //                           child:Row(
-                //                             children: [
-                //                               Expanded(
-                //                                 child: InkWell(
-                //                                   onTap: (){
-                //                                     setState(() {
-                //                                       if( General.cart.products[index].quantity <10){
-                //                                         setState(() {
-                //                                           General().editaddQuantity(General.cart.products[index].id).then((value){
-                //                                             setState(() {
-                //                                               total = total + General.cart.products[index].price[0].priceNow;
-                //                                             });
-                //                                           });
-                //                                         });
-                //                                       }
-                //                                     });
-                //                                   },
-                //                                   child: Container(
-                //                                     height: 40,
-                //                                     decoration: BoxDecoration(
-                //                                         color: Colors.grey.shade200,
-                //                                         borderRadius: BorderRadius.only(topLeft:Radius.circular(20),bottomLeft: Radius.circular(20))
-                //                                     ),
-                //                                     child: Icon(FontAwesomeIcons.plus,size: 18),
-                //                                   ),
-                //                                 ),
-                //                               ),
-                //                               Expanded(
-                //                                 child: Container(
-                //                                   height: 40,
-                //                                   color: Colors.grey.shade200,
-                //                                   child: Center(
-                //                                     child: Text( General.token != ""? cartlist.data.cartItems.items[index].quantity.toString():General.cart.products[index].quantity.toString(), style: TextStyle(
-                //                                         fontSize: 20,
-                //                                         fontWeight: FontWeight.bold
-                //                                     ),),
-                //                                   ),
-                //                                 ),
-                //                               ),
-                //                               Expanded(
-                //                                 child: InkWell(
-                //                                   onTap: (){
-                //
-                //                                   },
-                //                                   child: Container(
-                //                                     height: 40,
-                //                                     decoration: BoxDecoration(
-                //                                         borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),topRight: Radius.circular(20)),
-                //                                         color: Colors.grey.shade200
-                //                                     ),
-                //                                     child: Icon(FontAwesomeIcons.minus,size: 17,),
-                //                                   ),
-                //                                 ),
-                //                               ),
-                //                             ],
-                //                           ),
-                //                         ),
-                //                       ),
-                //                     ],
-                //                   )
-                //                 ],
-                //               ),
-                //             ),
-                //             Positioned(
-                //                 top: 20,
-                //                 right: 2,
-                //                 child: Text(' \$ ${General.token != ""?cartlist.data.cartItems.items[index].price*cartlist.data.cartItems.items[index].quantity:General.cart.products[index].price[0].priceNow*General.cart.products[index].quantity}',style: TextStyle(
-                //                     fontSize: 22,
-                //                     color: Colors.red
-                //                 ),)),
-                //             Positioned(
-                //                 bottom: 22,
-                //                 right: 5,
-                //                 child: InkWell(
-                //                   onTap: (){
-                //
-                //                     if (General.token!=""){
-                //                       setState(() {
-                //                         isloading = true;
-                //                       });
-                //                       Api.RemoveProductCart(cartlist.data.cartItems.items[index].productId, true).then((value2) {
-                //                         Api.LoadProductCart().then((value) {
-                //                           setState(() {
-                //                             cartlist = value;
-                //                             print (value);
-                //                             if(cartlist!= null){
-                //                               for(int i = 0;i<cartlist.data.cartItems.items.length;i++){
-                //                                 total = total + cartlist.data.cartItems.items[i].price*cartlist.data.cartItems.items[i].quantity;
-                //                               };
-                //                             }
-                //                             setState(() {
-                //                               isloading = false;
-                //                             });
-                //                           });
-                //                         });
-                //                       });
-                //                     }else{
-                //                       General().deletproduct(index).then((value) {
-                //                         General().getProductfromCart().then((value) {
-                //
-                //                           setState(() {
-                //                             General.cart.products = value;
-                //                             isloading = false;
-                //                           });
-                //                         });
-                //                       });
-                //
-                //                     }
-                //
-                //                     setState(() {
-                //                       setState(() {
-                //                         // total = total- General.cart.products[index].price[0].priceNow*General.cart.products[index].quantity;
-                //                       });
-                //                     });
-                //                   },
-                //                   child: Container(
-                //                     height: 45,
-                //                     width: 45,
-                //                     decoration: BoxDecoration(
-                //                         color: Colors.red,
-                //                         borderRadius: BorderRadius.all(Radius.circular(15))
-                //                     ),
-                //                     child: Center(child: Icon(FontAwesomeIcons.trashAlt,color: Colors.white,size: 17,)),
-                //                   ),
-                //                 )),
-                //           ],
-                //         ),
-                //       );
-                //     },
-                //   ),
-                // ),
-
-
-              ],
-            ),
+              ),
+            ],
           ),
 
         )
