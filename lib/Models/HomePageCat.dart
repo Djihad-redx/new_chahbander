@@ -235,7 +235,7 @@ class Offer {
 
   String name;
   int price;
-  CurrencyEnum currency;
+  String currency;
   String description;
   String shortDescriptions;
   UniqueSeoCode uniqueSeoCode;
@@ -246,7 +246,7 @@ class Offer {
   factory Offer.fromJson(Map<String, dynamic> json) => Offer(
     name: json["name"],
     price: json["price"],
-    currency: currencyEnumValues.map[json["currency"]],
+    currency: json["currency"],
     description: json["description"],
     shortDescriptions: json["shortDescriptions"],
     uniqueSeoCode: uniqueSeoCodeValues.map[json["uniqueSeoCode"]],
@@ -258,7 +258,7 @@ class Offer {
   Map<String, dynamic> toJson() => {
     "name": name,
     "price": price,
-    "currency": currencyEnumValues.reverse[currency],
+    "currency": currency,
     "description": description,
     "shortDescriptions": shortDescriptions,
     "uniqueSeoCode": uniqueSeoCodeValues.reverse[uniqueSeoCode],
@@ -416,7 +416,7 @@ class Product {
   String id;
   String name;
   double price;
-  CurrencyEnum currency;
+  String currency;
   List<PictureElement> picture;
   String shortDescriptions;
   double rating;
@@ -427,7 +427,7 @@ class Product {
     id: json["id"],
     name: json["name"],
     price: json["price"].toDouble(),
-    currency: currencyEnumValues.map[json["currency"]],
+    currency: json["currency"],
     picture: List<PictureElement>.from(json["picture"].map((x) => PictureElement.fromJson(x))),
     shortDescriptions: json["shortDescriptions"],
     rating: json["rating"].toDouble(),
@@ -439,7 +439,7 @@ class Product {
     "id": id,
     "name": name,
     "price": price,
-    "currency": currencyEnumValues.reverse[currency],
+    "currency": currency,
     "picture": List<dynamic>.from(picture.map((x) => x.toJson())),
     "shortDescriptions": shortDescriptions,
     "rating": rating,
@@ -533,14 +533,15 @@ class MenuCategory {
     this.name,
     this.locals,
     this.id,
-    this.children,this.isSelected
+    this.children,
+    this.isSelected
   });
 
   String name;
   List<MenuCategoryLocal> locals;
   String id;
   List<Child> children;
-  bool isSelected;
+  bool isSelected = false;
 
   factory MenuCategory.fromJson(Map<String, dynamic> json) => MenuCategory(
     name: json["name"],

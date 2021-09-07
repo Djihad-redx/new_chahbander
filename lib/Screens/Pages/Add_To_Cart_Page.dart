@@ -440,7 +440,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
                           padding: const EdgeInsets.fromLTRB(10, 10, 20, 15),
                           child: Text(
                             widget.result != null
-                                ? '${widget.result.price[0].priceNow}${widget.result.price[0].currency.code}'
+                                ? '${widget.result.price[0].priceNow*Quantity} ${widget.result.price[0].currency.code}'
                                 : '${widget.resultoffer.price}${widget.resultoffer.currency}',
                             style: TextStyle(
                                 fontSize: 30,
@@ -510,6 +510,7 @@ class _AddToCartPageState extends State<AddToCartPage> {
                                             if (Quantity < 10) {
                                               Quantity++;
                                             }
+
                                           });
                                         },
                                         child: Container(

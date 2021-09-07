@@ -113,8 +113,8 @@ class _CartPagepState extends State<CartPagep> {
                            child: Row(
                              children: [
                                SizedBox(
-                                 width: 130,
-                                 height: 130,
+                                 width: 100,
+                                 height: 100,
                                  child: AspectRatio(
                                    aspectRatio: 0.88,
                                    child: Container(

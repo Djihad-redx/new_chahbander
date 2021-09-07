@@ -99,7 +99,7 @@ class _ProductPageCattState extends State<ProductPageCatt> {
                       itemCount: 4,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio:(80/160),
+                          childAspectRatio:(80/135),
 
                       ),
                         itemBuilder: (BuildContext ctx, index) {
@@ -109,15 +109,22 @@ class _ProductPageCattState extends State<ProductPageCatt> {
                               children: [
                                 Stack(
                                   children: [
-                                    Container(
-                                      margin: EdgeInsets.all(10),
-                                      height: MediaQuery.of(context).size.height*.3,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        color: Colors.grey.shade200,
-                                        image: DecorationImage(
-                                            image: result.data.products[index].productPicture.isEmpty ?AssetImage('assets/images/np.png'): NetworkImage(result.data.products[index].productPicture[0].url),
-                                            fit: BoxFit.cover
+                                    InkWell(
+                                      onTap: (){
+
+                                        Navigator.of(widget.mycontext).push(MaterialPageRoute(builder: (context) => AddToCartPage(mycontext: widget.mycontext,result: result.data.products[index], ),));
+
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.all(10),
+                                        height: MediaQuery.of(context).size.height*.22,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                                          color: Colors.grey.shade200,
+                                          image: DecorationImage(
+                                              image: result.data.products[index].productPicture.isEmpty ?AssetImage('assets/images/np.png'): NetworkImage(result.data.products[index].productPicture[0].url),
+                                              fit: BoxFit.cover
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -160,7 +167,7 @@ class _ProductPageCattState extends State<ProductPageCatt> {
                                   width: double.infinity,
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 15),
-                                    child: Text('sepette 12% indirem',style: TextStyle(
+                                    child: Text('',style: TextStyle(
                                       fontSize: 10,
                                       color: Colors.green,
                                     ),textAlign: TextAlign.left,),
@@ -170,7 +177,7 @@ class _ProductPageCattState extends State<ProductPageCatt> {
                                   width: double.infinity,
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 15),
-                                    child: Text(result.data.products[index].price[0].priceNow.toString(),style: TextStyle(
+                                    child: Text(result.data.products[index].price[0].priceNow.toDouble().toString() + ' USD',style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.red,
                                     ),textAlign: TextAlign.left,),
@@ -191,15 +198,34 @@ class _ProductPageCattState extends State<ProductPageCatt> {
                                   width: double.infinity,
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 15),
-                                    child: Text('AirPod 2020',style: TextStyle(
+                                    child: Text(result.data.products[index].name,style: TextStyle(
+
                                       fontSize: 12,
                                       color: Colors.black,
-                                    ),textAlign: TextAlign.left,),
+                                    ),textAlign: TextAlign.left,maxLines:1,),
                                   ),
                                 ),
                                 InkWell(
                                   onTap: (){
-                                    Navigator.of(widget.mycontext).push(MaterialPageRoute(builder: (context) => AddToCartPage(mycontext: widget.mycontext,result: result.data.products[index], ),));
+
+                                    if(General.token != ""){
+                                      setState(() {
+                                        isloading = true;
+                                      });
+                                      Api.AddToCart(result.data.products[index].id,1,result.data.products[index].price[0].priceNow,result.data.products[index].price[0].currency.code).then((value) {
+                                        print(value);
+                                        print('add to server');
+
+                                        setState(() {
+                                          isloading = false;
+                                        });
+                                      });
+                                    }else{
+                                      General().setProductincart(result.data.products[index], 1).then((value) {
+                                        print("added to local");
+                                      //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CartPagep(),));
+                                      });
+                                    }
                                   },
                                   child: Container(
                                     margin: EdgeInsets.only(left: 10,right: 10,top: 5),

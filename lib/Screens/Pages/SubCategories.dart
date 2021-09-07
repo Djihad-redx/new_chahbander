@@ -37,19 +37,38 @@ class _SubCategoriesState extends State<SubCategories> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
+                    // setState(() {
+                    //   widget.result.data.menuCategory[index].isSelected = true;
+                    // });
                     setState(() {
-               widget.subcategories = widget.result.data.menuCategory[index].children;
+                  widget.subcategories = widget.result.data.menuCategory[index].children;
+
                     });
+                    for(int i =0;i< widget.result.data.menuCategory.length-1;i++){
+
+                      if(i != index){
+                        setState(() {
+                          widget.result.data.menuCategory[i].isSelected = false;
+                        });
+
+                      }else{
+                        setState(() {
+                          widget.result.data.menuCategory[i].isSelected = true;
+                        });
+                      }
+                    }
                   },
                   child: Container(
 
                       padding: EdgeInsets.all(0),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            height: 110,
-                            width: 110,
+                            height: 100,
+                            width: 100,
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage('assets/images/np.png')
@@ -59,7 +78,7 @@ class _SubCategoriesState extends State<SubCategories> {
                                 color: Colors.grey.shade200),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 8, left: 13),
+                            margin: EdgeInsets.only(top: 8, left: 4),
                             width: MediaQuery.of(context).size.width *
                                 .35,
                             child: Text(
@@ -67,7 +86,7 @@ class _SubCategoriesState extends State<SubCategories> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
-                                  color: Colors.black),
+                                  color:  widget.result.data.menuCategory[index].isSelected != true? Colors.black:Colors.orange),textAlign: TextAlign.center,
                             ),
                           ),
                         ],
@@ -87,7 +106,7 @@ class _SubCategoriesState extends State<SubCategories> {
                   Navigator.of(widget.mycontext).push(MaterialPageRoute(builder: (context) => ProductPageCatt(mycontext: widget.mycontext,id: widget.subcategories[index].id.toString(),),));
                 },
                 child: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.only(left: 4,top: 10,bottom: 10,right: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -95,8 +114,8 @@ class _SubCategoriesState extends State<SubCategories> {
                           children: [
                             Container(
                               margin: EdgeInsets.fromLTRB(10, 0, 15, 0),
-                              height: 110,
-                              width: 110,
+                              height: 100,
+                              width: 100,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage('assets/images/np.png')
@@ -115,7 +134,7 @@ class _SubCategoriesState extends State<SubCategories> {
                                     widget.subcategories[index].name,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 17,
+                                        fontSize: 15,
                                         color: Colors.black),
                                   ),
                                 ),

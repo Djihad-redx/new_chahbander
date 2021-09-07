@@ -15,6 +15,7 @@ class General {
   static String Currenc = "";
   static String Stringproduct = "";
   static DataCat cart = new DataCat();
+  static DataCat WishList = new DataCat();
 
 
 
@@ -23,37 +24,42 @@ class General {
     token = pref.getString("token") ?? "";
     return token;
   }
+
   void setUserToken(String tokenSet) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     token = tokenSet;
     pref.setString("token", tokenSet);
   }
+
   Future<String> getUserId() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     user_id = pref.getString("user_id") ?? "";
     return user_id;
   }
+
   void setUserID(String UserId) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     user_id = UserId;
     pref.setString("user_id", user_id);
   }
+
   Future<String> getUserLang() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     Lang = pref.getString("Lang") ?? "";
     return Lang;
   }
+
   void setUserLang(String LangSet) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     Lang = LangSet;
     pref.setString("Lang", LangSet);
   }
+
   Future<String> getUserCurrenc() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     Currenc = pref.getString("Currenc") ?? "";
     return Currenc;
   }
-
 
   Future<void> setProductincart(Product cartproduct, int Quantity) async {
     cart.products = [];
@@ -89,6 +95,43 @@ class General {
     }
 
   }
+
+  Future<void> setProductinWishList(Product productt, int Quantity) async {
+
+    WishList.products = [];
+    getProductfromCart().then((value) {
+      print(value);
+      if (value == null){
+        WishList.products = [];
+      }else
+        WishList.products = value;
+    });
+    SharedPreferences shared = await SharedPreferences.getInstance();
+
+    productt.quantity = Quantity;
+    int ok = 0;
+
+    int count = WishList.products.length == null?0 : WishList.products.length;
+    print(count);
+    for(int i = 0;i<count;i++){
+      if(productt.id == WishList.products[i].id){
+        WishList.products[i].quantity = WishList.products[i].quantity + Quantity;
+        Map product = cart.toJson2();
+        String Stringproduct = jsonEncode(product);
+        shared.setString('WishList', Stringproduct);
+      }else{
+        ok++;
+      }
+    }
+    if(ok == cart.products.length){
+      cart.products.add(productt);
+      Map product = cart.toJson2();
+      String Stringproduct = jsonEncode(product);
+      shared.setString('WishList', Stringproduct);
+    }
+
+  }
+
   Future<void> editaddQuantity(String ProductID) async {
     cart.products = [];
     getProductfromCart().then((value) {
@@ -108,6 +151,7 @@ class General {
     String Stringproduct = jsonEncode(product);
     shared.setString('cart', Stringproduct);
   }
+
   Future<void> editsubQuantity(String ProductID) async {
     cart.products = [];
     getProductfromCart().then((value) {
@@ -141,6 +185,7 @@ class General {
     cart.products = [];
     shared.setString('cart', "[]");
   }
+
   Future<List<Product>> getProductfromCart() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     Stringproduct = pref.getString("cart") ?? "";
@@ -153,6 +198,25 @@ class General {
       cart.products = null;
     }
     return cart.products;
+  }
+
+  Future<List<Product>> getProductfromWishList() async {
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    Stringproduct = pref.getString("WishList") ?? "";
+
+    if(Stringproduct != null && Stringproduct != ""){
+
+      Map cartt = jsonDecode(Stringproduct);
+      if(cartt != null){
+        WishList.products =  DataCat.fromJson2(cartt).products;
+      }
+    }
+    else{
+      WishList.products = null;
+    }
+    return WishList.products;
   }
 
   void setUserCurrenc(String CurrencSet) async {

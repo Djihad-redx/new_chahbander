@@ -28,7 +28,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 children: [
                   Icon(
                     Icons.settings,
-                    size: 40,
+                    size: 30,
                     color: Colors.white,
                   ),
                   SizedBox(
@@ -37,7 +37,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   Text(
                     'SETTINGS',
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 17,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   )
@@ -49,8 +49,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Icon(
-                Icons.settings,
-                size: 40,
+                Icons.history,
+                size: 30,
                 color: Colors.white,
               ),
               SizedBox(
@@ -59,7 +59,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               Text(
                 'MY ORDERS',
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 17,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               )
@@ -71,8 +71,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(
-                  Icons.settings,
-                  size: 40,
+                  Icons.person,
+                  size: 30,
                   color: Colors.white,
                 ),
                 SizedBox(
@@ -81,7 +81,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 Text(
                   'PROFILE',
                   style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 17,
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 )
@@ -92,8 +92,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Icon(
-                Icons.settings,
-                size: 40,
+                Icons.gps_fixed,
+                size: 30,
                 color: Colors.white,
               ),
               SizedBox(
@@ -102,7 +102,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               Text(
                 'ADDRESS',
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 17,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               )
@@ -114,8 +114,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(
-                  Icons.settings,
-                  size: 40,
+                  Icons.card_giftcard,
+                  size: 30,
                   color: Colors.white,
                 ),
                 SizedBox(
@@ -124,7 +124,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 Text(
                   'GIFT',
                   style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 17,
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 )
@@ -135,8 +135,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Icon(
-                Icons.settings,
-                size: 40,
+                Icons.message,
+                size: 30,
                 color: Colors.white,
               ),
               SizedBox(
@@ -145,7 +145,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               Text(
                 'MESSAGING',
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 17,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               )
@@ -157,8 +157,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(
-                  Icons.settings,
-                  size: 40,
+                  Icons.support_agent,
+                  size: 30,
                   color: Colors.white,
                 ),
                 SizedBox(
@@ -167,7 +167,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 Text(
                   'SUPPORT',
                   style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 17,
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 )

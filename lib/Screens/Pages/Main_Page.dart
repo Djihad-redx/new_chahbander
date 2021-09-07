@@ -167,7 +167,6 @@ class _MainPageState extends State<MainPage> {
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.orange,
           currentIndex: _currentIndex,
-
           onTap: (index) => setState(() => bottomTapped(index)),
 
             type : BottomNavigationBarType.fixed,

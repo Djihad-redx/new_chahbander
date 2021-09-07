@@ -35,7 +35,7 @@ class _HeaderAppState extends State<HeaderApp> {
                             widget.c).pop() :
                         Scaffold.of(context).openDrawer();
                       },
-                      child: Icon(widget.icon, size: 35,)),
+                      child: Icon(widget.icon, size: 25,)),
                 ),
                 Expanded(
                   child: Center(
@@ -60,7 +60,7 @@ class _HeaderAppState extends State<HeaderApp> {
 
                       },
                       child: widget.islogin == true ?Text('Skip',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),): Icon(
-                        Icons.shopping_cart, size: 35,)),
+                        Icons.shopping_cart, size: 28,)),
                 )
               ],
             ),

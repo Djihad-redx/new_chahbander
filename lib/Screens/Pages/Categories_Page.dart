@@ -57,16 +57,16 @@ class _CategoriesPageState extends State<CategoriesPage> {
                           });
                         },
                         child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.only(top: 10,bottom: 10,left: 5,right: 5),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.fromLTRB(10, 0, 15, 0),
-                                      height: 110,
-                                      width: 110,
+                                      margin: EdgeInsets.fromLTRB(5, 0, 15, 0),
+                                      height: 100,
+                                      width: 100,
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
                                               image: AssetImage('assets/images/np.png')
@@ -89,7 +89,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                                 .data.menuCategory[index].name,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 17,
+                                                fontSize: 15,
                                                 color: Colors.black),
                                           ),
                                         ),
